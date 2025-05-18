@@ -3,26 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Movie;
-use App\Services\MovieService;
 use Illuminate\Http\Request;
 
-class MovieController extends Controller
+class TestController extends Controller
 {
-    private $movieService;
-
-    public function __construct(MovieService $movieService)
-    {
-        $this->movieService = $movieService;
-    }
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $query = $request->get('query');
-        $results = $this->movieService->search($query);
-        return response()->json($results);
+        //
     }
 
     /**
@@ -36,7 +26,7 @@ class MovieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Movie $movie)
+    public function show(string $id)
     {
         //
     }
@@ -44,7 +34,7 @@ class MovieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Movie $movie)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -52,7 +42,7 @@ class MovieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Movie $movie)
+    public function destroy(string $id)
     {
         //
     }

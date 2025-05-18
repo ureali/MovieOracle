@@ -1,4 +1,5 @@
+import SearchBar from "./mainSearch/SearchBar";
 
 export default function App() {
-    return <h1>ABOBAAA</h1>
+    return <SearchBar/>
 }
