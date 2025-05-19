@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Movie;
 use App\Services\MovieService;
+use App\Services\RecommendationService;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
-    private $movieService;
+    private MovieService $movieService;
+    private RecommendationService $recommendationService;
 
-    public function __construct(MovieService $movieService)
+
+    public function __construct(MovieService $movieService, RecommendationService $recommendationService)
     {
         $this->movieService = $movieService;
+        $this->recommendationService = $recommendationService;
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +25,8 @@ class MovieController extends Controller
     public function index(Request $request)
     {
         $query = $request->get('query');
-        $results = $this->movieService->search($query);
+        $recommendations = $this->recommendationService->getRecommendations($query);
+        $results = $this->movieService->search($recommendations);
         return response()->json($results);
     }
 
