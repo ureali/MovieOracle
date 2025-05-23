@@ -20,6 +20,7 @@ class MovieService
                     't'      => $query,
                     'apikey' => $api_key,
                 ]);
+                Log::info($query);
                 return Movie::create([
                     'imdb_id' => $response->json()['imdbID'],
                     'title' => $response->json()['Title'],

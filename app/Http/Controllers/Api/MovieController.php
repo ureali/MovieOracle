@@ -65,7 +65,8 @@ class MovieController extends Controller
             'query' => 'required|string|max:255',
         ]);
         $query = $request->get('query');
-        $recommendations = $this->recommendationService->getRecommendations($query);
+        $recommendations = $this->recommendationService->getRecommendations($query)['title'];
+
         if ($recommendations !== null) {
             $results = $this->movieService->search($recommendations);
             if ($results !== null) {

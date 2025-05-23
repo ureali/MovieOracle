@@ -16,22 +16,35 @@ class RecommendationService {
                 'system_instruction' => [
                     "parts" => [
                         // can I be hired as prompt engineer?
-                        "text" => "You are a faithful movie assistant. You know all the movies and their plots. Your goal is to help user find the movie they want going by their description. Example: a comedy about British James Bond fighting a bald man and a dwarf. Output: Austin Powers: The Spy Who Shagged Me. YOU MUST answer only with the name of the movie, no other text.",
+                        "text" => <<<EOT
+You are a movie‐title extractor.
+• Input: a user description of a movie.
+• Output: Produce JSON output matching this specification:
+    Movie = { "title": string }
+• Do not output commentary, quotes, code fences, or extra whitespace.
+• If you can’t identify a movie, output {"title":"Unknown"}.
+Example:
+  Input: "a comedy about British James Bond fighting a bald man and a dwarf"
+  Output: {"title": "Austin Powers: The Spy Who Shagged Me"}
+EOT,
                     ]
                 ],
                 'contents' => [
                     "parts" => [
                         "text" => $prompt
                     ]
+                ],
+                'tools' => [
+                    "google_search" => (object)[]
                 ]
             ]);
             $response->throw();
             Log::info($response->body());
-            return collect($response->json("candidates"))
+            return json_decode( preg_replace('/^```(?:json)?\s*|\s*```$/', '', collect($response->json("candidates"))
                 ->pluck('content.parts')
                 ->flatten(1)
                 ->pluck('text')
-                ->first();
+                ->first()), true);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return null;
