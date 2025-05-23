@@ -9,6 +9,8 @@ class MovieService
 {
     public function search($query)
     {
+        $query = trim(preg_replace('/\s+/', ' ', $query));
+
         return Movie::where('title', 'ILIKE', "%$query%")->firstOr(function () use ($query) {
             $api_key = env('OMDB_KEY');
             $response = Http::get("http://www.omdbapi.com/?t={$query}&apikey={$api_key}");

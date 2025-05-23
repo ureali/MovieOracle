@@ -24,10 +24,6 @@ class MovieController extends Controller
      */
     public function index(Request $request)
     {
-        $query = $request->get('query');
-        $recommendations = $this->recommendationService->getRecommendations($query);
-        $results = $this->movieService->search($recommendations);
-        return response()->json($results);
     }
 
     /**
@@ -60,5 +56,13 @@ class MovieController extends Controller
     public function destroy(Movie $movie)
     {
         //
+    }
+
+    public function recommend(Request $request)
+    {
+        $query = $request->get('query');
+        $recommendations = $this->recommendationService->getRecommendations($query);
+        $results = $this->movieService->search($recommendations);
+        return response()->json($results->imdb_id);
     }
 }
