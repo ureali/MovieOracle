@@ -37,9 +37,10 @@ class MovieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Movie $movie)
+    public function show(string $imdbId)
     {
-        //
+        $movie = Movie::where('imdb_id', $imdbId)->firstOrFail();
+        return response()->json($movie);
     }
 
     /**
@@ -60,9 +61,18 @@ class MovieController extends Controller
 
     public function recommend(Request $request)
     {
+        $request->validate([
+            'query' => 'required|string|max:255',
+        ]);
         $query = $request->get('query');
         $recommendations = $this->recommendationService->getRecommendations($query);
-        $results = $this->movieService->search($recommendations);
-        return response()->json($results->imdb_id);
+        if ($recommendations !== null) {
+            $results = $this->movieService->search($recommendations);
+            if ($results !== null) {
+                return response()->json($results->imdb_id);
+            }
+        }
+
+        return response()->json("Server Error", 500);
     }
 }

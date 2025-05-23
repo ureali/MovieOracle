@@ -9,7 +9,7 @@ class RecommendationService {
     protected string $aiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
     public function getRecommendations(string $prompt) {
-        $api_key = env('GEMINI_KEY');
+        $api_key = config('services.gemini.key');
         try {
             // daring today, are we?
             $response = Http::acceptJson()->post("{$this->aiEndpoint}?key={$api_key}", [
@@ -34,6 +34,7 @@ class RecommendationService {
                 ->first();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
+            return null;
         }
 
     }
