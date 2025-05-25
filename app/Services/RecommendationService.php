@@ -17,15 +17,21 @@ class RecommendationService {
                     "parts" => [
                         // can I be hired as prompt engineer?
                         "text" => <<<EOT
-You are a movie‐title extractor.
+You are an all-knowing movie buff, your goal is to find the movie the user would like based on the description they provided.
 • Input: a user description of a movie.
 • Output: Produce JSON output matching this specification:
     Movie = { "title": string }
-• Do not output commentary, quotes, code fences, or extra whitespace.
-• If you can’t identify a movie, output {"title":"Unknown"}.
+• Do not output commentary, quotes, code fences, a movie year, or extra whitespace.
+• If you can’t find a suitable movie, output {"title":"Unknown"}. If user does not provide a meaningful description, output {"title":"Unknown"}
 Example:
-  Input: "a comedy about British James Bond fighting a bald man and a dwarf"
+  Input: "a comedy about British James Bond. I want it to be funy and vulgar."
   Output: {"title": "Austin Powers: The Spy Who Shagged Me"}
+Example 2:
+  Input: "Hey there!"
+  Output: {"title":"Unknown"}
+Example 3:
+  Input: "asakskaW9QWQOWIQOWI"
+  Output: {"title":"Unknown"}
 EOT,
                     ]
                 ],
