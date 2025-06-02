@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('year');
             $table->string('poster');
+            $table->string('where_to_watch_url');
+            $table->string('youtube_trailer_url')->nullable();
             $table->text('synopsis');
             $table->timestamps();
         });

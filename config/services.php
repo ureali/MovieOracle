@@ -42,5 +42,9 @@ return [
         'key' => env('OMDB_KEY'),
     ],
 
+    'youtube' => [
+        'key' => env('YOUTUBE_KEY'),
+    ]
+
 
 ];

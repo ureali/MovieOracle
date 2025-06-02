@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MovieResource;
 use App\Models\Movie;
 use App\Services\MovieService;
 use App\Services\RecommendationService;
@@ -39,8 +40,14 @@ class MovieController extends Controller
      */
     public function show(string $imdbId)
     {
-        $movie = Movie::where('imdb_id', $imdbId)->firstOrFail();
-        return response()->json($movie);
+        $movie = Movie::where('imdb_id', $imdbId)->first();
+
+        if (!$movie) {
+            $this->movieService->createByImdbId($imdbId);
+            $movie = Movie::where('imdb_id', $imdbId)->firstOrFail();
+        }
+
+        return new MovieResource($movie);
     }
 
     /**
@@ -65,12 +72,19 @@ class MovieController extends Controller
             'query' => 'required|string|max:255',
         ]);
         $query = $request->get('query');
-        $recommendations = $this->recommendationService->getRecommendations($query)['title'];
+        $recommendations = $this->recommendationService->getRecommendations($query);
+        if (count($recommendations) == 1 && $recommendations[0] == "Unknown") {
+            return response()->json([]);
+        }
 
         if ($recommendations !== null) {
-            $results = $this->movieService->search($recommendations);
+            $results = [];
+            foreach ($recommendations as $recommendation) {
+                $results[] = $this->movieService->search($recommendation);
+            }
+
             if ($results !== null) {
-                return response()->json($results->imdb_id);
+                return response()->json(array_map(function ($movie) {return $movie->imdb_id;}, $results));
             }
         }
 

@@ -12,5 +12,15 @@ class Movie extends Model
         'poster',
         'year',
         'synopsis',
+        'where_to_watch_url',
+        'youtube_trailer_url',
+        'director',
+        'ratings',
+        'genres',
+    ];
+
+    // it's ratingS not rating
+    protected $casts = [
+        'ratings' => 'array',
     ];
 }
