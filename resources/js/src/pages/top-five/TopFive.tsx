@@ -1,0 +1,90 @@
+import {Route} from "@/routes/movie/recommendations.tsx";
+import {useQueries} from "@tanstack/react-query";
+import fetchMovie from "@/services/fetchMovie.ts";
+import Loading from "@/components/Loading/Loading.tsx";
+import {Link} from "@tanstack/react-router";
+import Error from "@/components/Error/Error"
+import type Movie from "@/models/Movie.ts";
+import MoviePoster from "@/components/MoviePoster/MoviePoster.tsx";
+import sadOracle from "../../../public/images/sad_oracle.png"
+import {useEffect, useState} from "react";
+import OracleLink from "@/components/OracleLink/OracleLink.tsx";
+
+export default function TopFive() {
+    const { ids } = Route.useSearch(); // Get validated and typed 'ids'
+    const [copied, setCopied] = useState(false);
+
+    const movieQueries = useQueries({
+        queries: ids.map((id) => ({
+            queryKey: ['movie', id],
+            queryFn: () => fetchMovie(id),
+            retry: 1,
+            enabled: !!id,
+            staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+        })),
+    });
+
+    useEffect(()=>{
+        const timer = setTimeout(()=>{
+            setCopied(false);
+        }, 2000)
+
+        // clean-up function
+        return () =>{
+            clearTimeout(timer)
+        }
+    }, [copied])
+
+    const isLoading = movieQueries.some(query => query.isLoading);
+    const isError = movieQueries.some(query => query.isError);
+
+    const successfullyFetchedMovies = movieQueries
+        .filter(query => query.isSuccess && query.data)
+        .map(query => query.data as Movie);
+
+    if (isLoading) {
+        return <Loading />;
+    }
+
+    // if the oracle couldn't find anything then there must be an error.
+    if (isError) {
+        return <Error/>;
+    }
+
+    if (!ids || ids.length === 0) {
+        return (
+            <main>
+                <h1 className="text-3xl font-bold text-center my-6">Our Oracle couldn't find a movie you'd like!</h1>
+                <p className="text-2xl text-center mb-8">Please adjust your description!</p>
+                <img src={sadOracle} alt="Sad orangutan with popcorn and film reel" className="w-1/4 block mx-auto"/>
+            </main>
+        )
+    }
+
+
+    return (
+        <main className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold text-center mb-6">Your Movie Recommendations</h1>
+            <p className="text-2xl text-center mb-8">Here are Top Five matches according to our Oracle! Click for more
+                details!</p>
+            <div
+                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 gap-10 justify-center items-center  auto-rows-[1fr]  ">
+                {successfullyFetchedMovies.map((movie) => (
+                    <Link to={`/movie/$imdbId`} params={{imdbId: movie.imdb_id}} key={movie.imdb_id}
+                          className=" flex-col items-center hover:scale-105 transition-all">
+                        <div className="w-[300px] mx-auto">
+                            <h2 className="text-3xl bg-black text-center truncate z-20 text-movie-yellow font-bold p-4 text-shadow-[0_0_4px_rgba(255,255,0,0.8)] font-bangers tracking-widest hover:text-shadow-[0_0_8px_rgba(255,255,0,1)] transition-all  ">{movie.title}</h2>
+                            <MoviePoster movie={movie} restrictSize={true}/>
+                        </div>
+                    </Link>
+                ))}
+            </div>
+            <p className="text-2xl text-center mt-8 mb-4">Want to share the recommendations? Just bookmark the page!</p>
+            <p className="text-2xl text-center font-bold">OR</p>
+            <p className="text-2xl text-center mb-8 mt-4">Copy and save the link!</p>
+            <button onClick={() => {navigator.clipboard.writeText(window.location.href); setCopied(true)}} className="px-6 w-fill mx-auto block py-3 bg-primary outline outline-2 -outline-offset-6 outline-movie-yellow text-white font-semibold rounded-2xl shadow-md hover:shadow-lg hover:scale-105 transition-all">{copied ? 'Link Copied!' : 'Copy Link'}</button>
+
+            <OracleLink destination={"/"} text="Back to Oracle"/>
+        </main>
+    );
+}

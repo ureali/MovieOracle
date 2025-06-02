@@ -1,0 +1,66 @@
+:root {
+    --marquee-bg: #222222;
+    --marquee-border: #B12125;
+    --bg-color: #FdFdFd;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: #121212;
+}
+
+
+
+body::after{
+    content: "";
+    pointer-events: none;
+    background-image: url("../public/images/grain.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 300%;
+    width: 300%;
+    opacity: 1;
+    position: fixed;
+    left: -50%;
+    top: -100%;
+    mix-blend-mode: lighten;
+    animation: grain 8s steps(10) infinite;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1A1A1A;
+    }
+    body{
+        color: #FAFAFA;
+    }
+
+    body::after {
+        opacity: 0.3;
+    }
+
+}
+
+
+@keyframes grain {
+    0%, 100% { transform:translate(0, 0) }
+    10% { transform:translate(-3.5%, -7%) }
+    20% { transform:translate(-10.5%, 3.5%) }
+    30% { transform:translate(4.9%, -17.5%) }
+    40% { transform:translate(-3.5%, 17.5%) }
+    50% { transform:translate(-10.5%, 7%) }
+    60% { transform:translate(10.5%, 0%) }
+    70% { transform:translate(0%, 10.5%) }
+    80% { transform:translate(2.1%, 24.5%) }
+    90% { transform:translate(-7%, 7%) }
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}

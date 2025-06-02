@@ -1,0 +1,24 @@
+.movie-night-sky::after {
+    content: '';
+    position: absolute;
+    display: block;
+    left: 0; right: 0; bottom: 0;
+    height: 50px;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 0%,
+        var(--bg-color) 100%
+    );
+
+}
+
+.movie-theater-section {
+    position: relative;
+    background-image: url("../../../public/images/movie_theater_tileable.jpg");
+    background-size: cover;      /* was cover already—kept */
+    background-repeat: no-repeat;/* prevent vertical tiling inside aspect box   */
+    background-position: center; /* keep curtain pattern centered               */
+    /* overflow now handled by inline class `overflow-hidden` */
+}

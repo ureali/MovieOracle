@@ -1,0 +1,44 @@
+.bubble {
+    position: absolute;
+   top: -54px;
+    outline: 1px solid var(--color-primary);
+    outline-offset: -10px;
+    color: #121212;
+}
+
+
+
+.oracle {
+    outline: 1px solid #FFD700;
+    background-color: var(--color-primary);
+    color: #fff;
+}
+.bubble.left {
+    right: 90px;
+    left: auto;
+}
+
+.bubble.left::after {
+    content: "";
+    position: absolute;
+    top: 90%;
+    right: 0;
+    border-width: 16px;
+    border-style: solid;
+    border-color: var(--color-primary) transparent transparent transparent;
+}
+
+.bubble.right {
+    left: 90px;
+    right:  auto;
+}
+
+.bubble.right::after {
+    content: "";
+    position: absolute;
+    top: 90%;
+    left: 0;
+    border-width: 16px;
+    border-style: solid;
+    border-color: var(--color-amber-50) transparent transparent transparent;
+}

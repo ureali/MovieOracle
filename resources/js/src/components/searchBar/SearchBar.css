@@ -1,0 +1,25 @@
+.film-strip {
+    background-image: url("../../../public/images/film-strip.svg");
+    min-height: fit-content;
+    padding: 3rem 0;
+    background-size: auto;
+    width: 100%;
+    background-repeat: repeat-x;
+    filter:drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+    animation: scroll-film 90s infinite linear;
+    animation-play-state: running;
+
+}
+
+.film-strip.focused-input{
+    animation-play-state: paused;
+}
+
+@keyframes scroll-film {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -100% 0;
+    }
+}
