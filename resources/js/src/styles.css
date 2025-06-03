@@ -2,11 +2,12 @@
     --marquee-bg: #222222;
     --marquee-border: #B12125;
     --bg-color: #FdFdFd;
+    --text-color: #121212;
 }
 
 body {
     background-color: var(--bg-color);
-    color: #121212;
+    color: var(--text-color);
 }
 
 
@@ -30,9 +31,7 @@ body::after{
 @media (prefers-color-scheme: dark) {
     :root {
         --bg-color: #1A1A1A;
-    }
-    body{
-        color: #FAFAFA;
+        --text-color: #FAFAFA;
     }
 
     body::after {

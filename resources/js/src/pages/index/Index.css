@@ -13,6 +13,12 @@ li::marker {
     font-size: 1.5em;
     color: var(--color-primary);
 }
+
+@media (prefers-color-scheme: dark) {
+    li::marker {
+        color: var(--color-movie-yellow);
+    }
+}
 .night-sky::after {
     content: '';
     position: absolute;

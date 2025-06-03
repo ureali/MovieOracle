@@ -69,7 +69,7 @@ class MovieController extends Controller
     public function recommend(Request $request)
     {
         $request->validate([
-            'query' => 'required|string|max:255',
+            'query' => 'required|string|max:512',
         ]);
         $query = $request->get('query');
         $recommendations = $this->recommendationService->getRecommendations($query);

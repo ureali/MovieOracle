@@ -69,6 +69,9 @@ EOT,
 
             $clean = preg_replace('/^```(?:json)?\s*|\s*```$/', '', $raw);
 
+            if (!json_validate($clean)) {
+                return ['Unknown'];
+            }
             $movies = json_decode($clean, true, 512, JSON_THROW_ON_ERROR);
 
             if (empty($movies) || (isset($movies[0]['title']) && strtolower($movies[0]['title']) === 'unknown')) {

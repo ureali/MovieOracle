@@ -12,7 +12,7 @@ export default function Index() {
             <header className="w-full flex justify-center items-center relative">
                 <img src={nightSky} alt="Night Sky"
                      className="block absolute top-0 left-0 w-full h-full -z-10"/>
-                <Marquee title="Movie Oracle"/>
+                <Marquee title="Suggest a Flick"/>
             </header>
             <main className="text-center">
                 <section className="w-full flex justify-center items-center relative pb-16 night-sky">
@@ -52,19 +52,19 @@ export default function Index() {
                 <section className="mt-16 text-center w-2/3 mx-auto">
                     <h1 className="font-bold text-4xl mb-6">Tips and Tricks</h1>
                     <ul className="list-inside text-left text-xl max-w-7xl mx-auto">
-                        <li className="mb-6 bg-white rounded-xl shadow-md border-2 border-yellow-400 p-6 hover:shadow-lg hover:border-yellow-500 transition-all duration-200 text-lg sm:text-xl text-gray-700 leading-relaxed">
+                        <li className="mb-6 bg-white dark:bg-black rounded-xl shadow-md border-2 border-yellow-400 p-6 hover:shadow-lg hover:border-yellow-500 dark:border-primary dark:hover:border-red-500 transition-all duration-200 text-lg sm:text-xl text-gray-700 dark:text-gray-200 leading-relaxed">
                                 Describe the movie in details. Our movie oracle doesn't need much to find a good match,
                                 but
                                 try to provide at least 1-2 sentences.
                         </li>
 
-                        <li className="mb-6 bg-white rounded-xl shadow-md border-2 border-yellow-400 p-6 hover:shadow-lg hover:border-yellow-500 transition-all duration-200 text-lg sm:text-xl text-gray-700 leading-relaxed">
+                        <li className="mb-6 bg-white dark:bg-black rounded-xl shadow-md border-2 border-yellow-400 p-6 hover:shadow-lg hover:border-yellow-500  dark:border-primary dark:hover:border-red-500 transition-all duration-200 text-lg sm:text-xl text-gray-700 dark:text-gray-200 leading-relaxed">
                                 Use English for best result. While the oracle can suggest foreign movies, the support
                                 for
                                 non-English titles is limited.
                         </li>
 
-                        <li className="bg-white rounded-xl shadow-md border-2 border-yellow-400 p-6 hover:shadow-lg hover:border-yellow-500 transition-all duration-200 text-lg sm:text-xl text-gray-700 leading-relaxed">
+                        <li className="bg-white dark:bg-black rounded-xl shadow-md border-2 border-yellow-400 p-6 hover:shadow-lg hover:border-yellow-500 dark:border-primary dark:hover:border-red-500 transition-all duration-200 text-lg sm:text-xl text-gray-700 dark:text-gray-200 leading-relaxed">
                                 The description can be anything, be creative! "I want a cool movie" would work worse
                                 than "I
                                 am a fan of Marvel and DC franchises. Could you suggest a superhero movie made by a

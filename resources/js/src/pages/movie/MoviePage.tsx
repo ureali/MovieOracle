@@ -2,7 +2,7 @@ import {Route} from "@/routes/movie/$imdbId.tsx";
 import nightSky from "../../../public/images/night-sky.jpg";
 import Marquee from "@/components/marquee/Marquee.tsx";
 import "./MoviePage.css"
-import {Link, useRouter} from "@tanstack/react-router";
+import {useRouter} from "@tanstack/react-router";
 import MoviePoster from "@/components/MoviePoster/MoviePoster.tsx";
 import OracleLink from "@/components/OracleLink/OracleLink.tsx";
 import metacritic from "../../../public/images/ratings/metacritic.svg";
@@ -84,7 +84,7 @@ export default function MoviePage() {
                 </div>
             </section>
             <section className="rounded-xl border-b-4 border-b-movie-yellow
-                        shadow-xl hover:-translate-y-1 transition max-w-screen-xl mx-auto mt-16
+                        shadow-xl hover:-translate-y-1 transition max-w-screen-xl max-lg:max-w-4/5 mx-auto mt-16
                         bg-white/5 backdrop-blur">
                 <h2 className="text-3xl font-bangers text-primary text-center py-4">Where to Watch</h2>
                 <div className="px-6 pb-6 text-lg leading-relaxed"><OracleLink
