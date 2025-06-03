@@ -8,6 +8,7 @@ use App\Models\Movie;
 use App\Services\MovieService;
 use App\Services\RecommendationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Concurrency;
 
 class MovieController extends Controller
 {
@@ -68,8 +69,9 @@ class MovieController extends Controller
 
     public function recommend(Request $request)
     {
+        // on front its limited to 512, but im giving some leeway for filters.
         $request->validate([
-            'query' => 'required|string|max:512',
+            'query' => 'required|string|max:1024',
         ]);
         $query = $request->get('query');
         $recommendations = $this->recommendationService->getRecommendations($query);
@@ -78,13 +80,16 @@ class MovieController extends Controller
         }
 
         if ($recommendations !== null) {
-            $results = [];
-            foreach ($recommendations as $recommendation) {
-                $results[] = $this->movieService->search($recommendation);
-            }
+            $movies = collect($recommendations)->map(function ($recommendation) {
+                return function () use ($recommendation) {
+                    $movieService = app(MovieService::class);
+                    return $movieService->search($recommendation);
+                };
+            })->toArray();
 
+            $results = Concurrency::run($movies);
             if ($results !== null) {
-                return response()->json(array_map(function ($movie) {return $movie->imdb_id;}, $results));
+                return response()->json(collect($results)->pluck('imdb_id'));
             }
         }
 

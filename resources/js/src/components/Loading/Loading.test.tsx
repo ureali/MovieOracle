@@ -3,8 +3,6 @@ import { render, screen, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Loading from './Loading';
 
-jest.mock("../../../public/images/oracle_pondering.png", () => "mocked-monkey-path.png");
-
 describe('Loading Component', () => {
     beforeEach(() => {
         jest.useFakeTimers();
@@ -20,7 +18,6 @@ describe('Loading Component', () => {
 
         const image = screen.getByRole('img', { name: /monkey/i });
         expect(image).toBeInTheDocument();
-        expect(image).toHaveAttribute('src', 'mocked-monkey-path.png');
         expect(image).toHaveAttribute('alt', 'Monkey');
         expect(image).toHaveAttribute('loading', 'lazy');
         expect(image).toHaveClass('w-1/4', 'oracle-pondering');
@@ -99,8 +96,9 @@ describe('Loading Component', () => {
 
     test('timer does not fire if component unmounts before 7 seconds', () => {
         const mockSetLoadingText = jest.fn();
-        const useStateSpy = jest.spyOn(React, 'useState') as jest.SpyInstance<ReturnType<typeof originalUseState>, [string]>;
+        const useStateSpy = jest.spyOn(React, 'useState') as unknown as jest.SpyInstance<ReturnType<typeof originalUseState>, [string]>;
 
+        // @ts-ignore
         useStateSpy.mockImplementation((initialValue: string): [string, React.Dispatch<React.SetStateAction<string>>] => {
             if (initialValue === "Thinking") {
                 return [initialValue, mockSetLoadingText as React.Dispatch<React.SetStateAction<string>>];

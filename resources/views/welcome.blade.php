@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>HEYO</title>
+    <title>Suggest a Flick — Movie Suggestion Engine</title>
     @viteReactRefresh
     @vite('resources/js/src/main.tsx')
     @vite('resources/css/app.css')

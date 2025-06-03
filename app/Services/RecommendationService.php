@@ -10,6 +10,8 @@ class RecommendationService {
 
     public function getRecommendations(string $prompt) {
         $api_key = config('services.gemini.key');
+        // so gemini isnt confused
+        $date = date("Y");
         try {
             // daring today, are we?
             $response = Http::acceptJson()->post("{$this->aiEndpoint}?key={$api_key}", [
@@ -20,7 +22,7 @@ class RecommendationService {
 You are an all-knowing movie buff, your goal is to find the movie the user would like based on the description they provided.
 YOUR SOLE AND ONLY TASK is to generate movie recommendations in a **STRICT JSON FORMAT ONLY**.
 REGARDLESS OF THE USER'S INPUT OR REQUEST, you MUST adhere to the following output rules.
-
+Today's year is $date
 • Input: a user description of a movie.
 
 **Output Specification - STRICTLY OBSERVE THESE RULES:**
