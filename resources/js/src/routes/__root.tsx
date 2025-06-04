@@ -4,8 +4,8 @@ import Footer from "@/components/Footer/Footer.tsx";
 export const Route = createRootRoute({
   component: () => (
     <>
-      <Outlet />
-        <Footer/>
+            <Outlet />
+            <Footer/>
     </>
   ),
 })

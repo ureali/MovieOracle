@@ -11,10 +11,12 @@ use function Symfony\Component\String\s;
 class MovieService
 {
     private TrailerService $trailerService;
+    private ApiUsageTrackerService $apiUsageTrackerService;
 
-    public function __construct(\App\Services\TrailerService $trailerService)
+    public function __construct(\App\Services\TrailerService $trailerService,  ApiUsageTrackerService $apiUsageTrackerService)
     {
         $this->trailerService = $trailerService;
+        $this->apiUsageTrackerService = $apiUsageTrackerService;
     }
 
 
@@ -49,7 +51,10 @@ class MovieService
                 $title = $param == "t" ? $query : $response['Title'];
                 $slug = Str::slug($title, '-');
                 $type = $response->json()['Type'] === 'series' ? 'tv-show' : 'movie';
-                Log::info("Omdb response status: {$response->status()}");
+                $this->apiUsageTrackerService->recordCall('omdb');
+                $this->apiUsageTrackerService->recordCall('youtube');
+
+
                 return Movie::create([
                     'imdb_id'             => $response['imdbID']       ,
                     'title'               => $response['Title']        ,

@@ -38,8 +38,18 @@ export default function Recommend() {
     if (!query) {
         return (
             <>
+                <title>Finding Recommendations – Suggest a Flick</title>
+                <meta
+                    name="description"
+                    content="Fetching personalized movie recommendations based on your query. Redirecting to your results."
+                />
+                <meta
+                    name="keywords"
+                    content="movie recommendations, AI movie search, Suggest a Flick"
+                />
                 <div className="text-center p-4">
-                    Our Oracle needs description to find find the movie of your dream! Try again, make sure to type it out.
+                    Our Oracle needs description to find find the movie of your dream! Try again, make sure to type it
+                    out.
                 </div>
                 <Link to="/" search={{}}>
                     Home
@@ -50,7 +60,7 @@ export default function Recommend() {
 
 
     if (isLoading || isFetching) {
-       return <Loading/>
+        return <Loading/>
     }
 
     if (isError || !data) {
