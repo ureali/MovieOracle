@@ -13,11 +13,18 @@ export default function MoviePage() {
     const { history } = useRouter()
 
 
-    console.log(movie)
-
 
     return (
         <main className="relative">
+            <title>{`${movie.title} – Suggest a Flick`}</title>
+            <meta
+                name="description"
+                content={`Discover details about "${movie.title}": synopsis, director, ratings, genres, where to watch, and trailer.`}
+            />
+            <meta
+                name="keywords"
+                content={`${movie.title}, movie details, watch ${movie.title}, ${movie.title} trailer`}
+            />
             <header
                 className="w-full flex flex-col-reverse justify-center items-center pt-8 pb-8 relative movie-night-sky ">
                 {/* Yes it's a fake link. Tanstack doesnt have navigate back smh. */}
@@ -48,24 +55,25 @@ export default function MoviePage() {
 
                             {movie.ratings ? (<ul className="flex gap-8">
                                 {movie.ratings.map(({Source, Value}) => {
-                                const logos:Record<string, string> = {
-                                "Rotten Tomatoes": tomatoes,
-                                "Internet Movie Database": imdb,
-                                "Metacritic": metacritic,
-                            };
+                                    const logos: Record<string, string> = {
+                                        "Rotten Tomatoes": tomatoes,
+                                        "Internet Movie Database": imdb,
+                                        "Metacritic": metacritic,
+                                    };
 
-                                return (
-                                <li key={Source} className="flex items-center gap-3">
-                                {logos[Source] && (
-                                    <img
-                                        src={logos[Source]}
-                                        alt={`${Source} logo`}
-                                        className="h-6 w-6 object-contain"
-                                    />
-                                )}
-                                <span>{Value}</span>
-                            </li>); })}
-                        </ul>) : ""}
+                                    return (
+                                        <li key={Source} className="flex items-center gap-3">
+                                            {logos[Source] && (
+                                                <img
+                                                    src={logos[Source]}
+                                                    alt={`${Source} logo`}
+                                                    className="h-6 w-6 object-contain"
+                                                />
+                                            )}
+                                            <span>{Value}</span>
+                                        </li>);
+                                })}
+                            </ul>) : ""}
                             {movie.director ? (<p>
                                 <span className="font-bold">Director:</span> {movie.director}
                             </p>) : ""}

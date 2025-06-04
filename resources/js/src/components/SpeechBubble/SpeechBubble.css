@@ -49,3 +49,19 @@
     }
 
 }
+
+@media screen and (max-width: 768px) {
+    .bubble {
+        top: -74px;
+    }
+
+    .bubble.left {
+        top: -54px;
+        right: 35px;
+    }
+
+    .bubble.right {
+        left: 35px;
+    }
+
+}

@@ -33,7 +33,7 @@ export default function Marquee({ title }:MarqueeProps) {
 
     return (
         <div
-            className="marquee flex justify-center items-center w-fit mx-auto my-14 relative text-center px-10 py-12 bg-white font-bangers text-6xl border-[16px] border-solid rounded-2xl">
+            className="marquee flex justify-center items-center w-fit mx-auto my-14 relative text-center px-10 py-12 bg-white font-bangers text-6xl max-lg:text-4xl max-lg:px-6 max-lg:py-8 border-[16px] border-solid rounded-2xl">
             <h1 className="">
                 {title}
             </h1>

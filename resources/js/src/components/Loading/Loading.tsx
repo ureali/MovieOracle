@@ -14,7 +14,7 @@ export default function Loading() {
     }, []);
 
     return (<main className="h-dvh flex flex-col justify-center items-center">
-        <img src={monkey} loading="lazy" alt="Monkey" className="w-1/4 oracle-pondering"/>
+        <img src={monkey} loading="lazy" alt="Monkey" className="w-1/4 max-md:w-1/2 oracle-pondering"/>
         <h2 className="loading text-3xl max-lg:text-lg max-md:text-sm mt-8">{loadingText}</h2>
     </main>)
 }

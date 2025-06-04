@@ -17,7 +17,7 @@ export default function ExampleChat({chatInfo}:ExampleChatProps){
                 <SpeechBubble line={chatInfo.linePerson} position="right" isOracle={false}/>
                 <ExampleChatIcon url={chatInfo.personImg}/>
             </div>
-            <div className="flex flex-col justify-evenly relative items-end">
+            <div className="flex flex-col justify-evenly relative max-md:mt-12 items-end">
                 <SpeechBubble line={chatInfo.lineMonkey} position="left" isOracle={true}/>
                 <ExampleChatIcon url={chatInfo.monkeyImg}/>
             </div>

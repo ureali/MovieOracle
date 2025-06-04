@@ -8,7 +8,7 @@ type HowToUseCardProps = {
 export default function HowToUseCard({ step, title, description, icon }:HowToUseCardProps) {
     return (
         <div
-            className="flex flex-col items-center gap-3 rounded-xl bg-white dark:bg-black p-6 shadow-lg w-1/3 mx-2 transition-transform duration-200 hover:-translate-y-1"
+            className="flex flex-col items-center gap-3 rounded-xl bg-white dark:bg-black p-6 shadow-lg max-md:mt-2 mx-2 transition-transform duration-200 hover:-translate-y-1"
         >
             <div className="text-4xl">{icon}</div>
 

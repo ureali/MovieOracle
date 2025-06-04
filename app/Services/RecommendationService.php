@@ -8,7 +8,15 @@ use Illuminate\Support\Facades\Log;
 class RecommendationService {
     protected string $aiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
+    private ApiUsageTrackerService $apiUsageTrackerService;
+
+    public function __construct(ApiUsageTrackerService $apiUsageTrackerService)
+    {
+        $this->apiUsageTrackerService = $apiUsageTrackerService;
+    }
+
     public function getRecommendations(string $prompt) {
+        $this->apiUsageTrackerService->recordCall('gemini');
         $api_key = config('services.gemini.key');
         // so gemini isnt confused
         $date = date("Y");
