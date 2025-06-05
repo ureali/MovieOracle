@@ -4,6 +4,7 @@ namespace App\Services;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class RecommendationService {
     protected string $aiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
@@ -73,6 +74,9 @@ EOT,
                     "google_search" => (object)[]
                 ]
             ]);
+            if ($response->status() == 503) {
+                throw new HttpException(503, "Gemini unavailable");
+            }
             $response->throw();
             Log::info($response->body());
             $raw = $response->json('candidates.0.content.parts.0.text');
@@ -96,6 +100,14 @@ EOT,
 
 
             return array_column($movies, 'title');
+        } catch (HttpException $e) {
+            if ($e->getStatusCode() == 503) {
+                throw new HttpException(503, "Gemini unavailable");
+            } else {
+                Log::error($e->getMessage());
+                return null;
+            }
+
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return null;

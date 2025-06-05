@@ -8,6 +8,7 @@ use App\Services\RecommendationService;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\TestCase;
 
 class MovieControllerTest extends TestCase
@@ -71,7 +72,7 @@ class MovieControllerTest extends TestCase
         $this->postJson('/api/v1/recommend', [])
             ->assertStatus(422);
 
-        $this->postJson('/api/v1/recommend', ['query' => str_repeat('a', 513)])
+        $this->postJson('/api/v1/recommend', ['query' => str_repeat('a', 1025)])
             ->assertStatus(422);
     }
 
@@ -128,5 +129,18 @@ class MovieControllerTest extends TestCase
 
         $this->postJson('/api/v1/recommend', ['query' => 'fail'])
             ->assertStatus(500);
+    }
+    public function test_recommend_returns_503_when_service_returns_unavailable(): void
+    {
+        $recService = Mockery::mock(RecommendationService::class)
+            ->shouldReceive('getRecommendations')
+            ->once()
+            ->with('fail')
+            ->andThrowExceptions([new HttpException(503, "Gemini unavailable" )])
+            ->getMock();
+        $this->instance(RecommendationService::class, $recService);
+
+        $this->postJson('/api/v1/recommend', ['query' => 'fail'])
+            ->assertStatus(503);
     }
 }

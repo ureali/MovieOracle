@@ -4,8 +4,11 @@ type MarqueeProps = {
     title:string;
 }
 export default function Marquee({ title }:MarqueeProps) {
-    const numLightsHorizontal = title.length < 10 ? 5 : 10;
-    const numLightsVertical = 4;
+    // no it doesnt respond to resize, and no i dont care
+    // i think performance issues are not worth the esthetic benefit
+    const isNarrowScreen = window.matchMedia("(max-width: 768px)").matches;
+    const numLightsHorizontal =  isNarrowScreen ? 5 : title.length < 10 ? 5 : 10;
+    const numLightsVertical = numLightsHorizontal === 10 ? 4 : 3;
 
     function renderLights(count:number, side:string) {
         let numPlainTopLights:number;

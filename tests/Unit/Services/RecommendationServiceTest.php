@@ -2,21 +2,31 @@
 
 namespace Tests\Unit\Services;
 
+use App\Services\ApiUsageTrackerService;
 use App\Services\RecommendationService;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Mockery;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\TestCase;
 
 class RecommendationServiceTest extends TestCase
 {
     protected RecommendationService $service;
+    private ApiUsageTrackerService $apiService;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new RecommendationService();
+        $this->apiService = Mockery::mock(ApiUsageTrackerService::class);
+        $this->apiService
+            ->shouldReceive('recordCall')
+            ->with('gemini')
+            ->andReturnNull();
+        $this->service = new RecommendationService($this->apiService);
+
         Http::preventStrayRequests();
         Log::shouldReceive('info')->byDefault();
         Log::shouldReceive('warning')->byDefault();
@@ -80,6 +90,25 @@ class RecommendationServiceTest extends TestCase
         $result = $this->service->getRecommendations('test');
 
         $this->assertNull($result);
+        Http::assertSent(function ($request) {
+            return str_contains($request->url(), 'bye-bye-wallet');
+        });
+    }
+
+    public function test_gemini_unavailable()
+    {
+        Config::set('services.gemini.key', 'bye-bye-wallet');
+
+        Http::fake([
+            '*' => Http::response('Gemini Unavailable', 503)
+        ]);
+
+        $this->expectException(HttpException::class);
+        $this->expectExceptionMessage('Gemini unavailable');
+
+        $result = $this->service->getRecommendations('test');
+
+
         Http::assertSent(function ($request) {
             return str_contains($request->url(), 'bye-bye-wallet');
         });

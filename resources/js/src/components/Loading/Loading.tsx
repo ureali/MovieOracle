@@ -7,7 +7,7 @@ export default function Loading() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setLoadingText("Oracle is taking longer than usual. Hang tight");
+            setLoadingText("Oracle is almost done. Hang tight");
         }, 7000);
 
         return () => clearTimeout(timer);

@@ -11,8 +11,7 @@ export default async function fetchImdbIds(query:string):Promise<Array<string> |
             body: data
         });
     if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: "Network response was not ok" }));
-        throw new Error(errorData.message || "Failed to fetch movies");
+        throw new Error(String(response.status));
     }
     return await response.json() as Promise<Array<string>>;
 }

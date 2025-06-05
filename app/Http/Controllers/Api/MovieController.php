@@ -9,6 +9,7 @@ use App\Services\MovieService;
 use App\Services\RecommendationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Concurrency;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class MovieController extends Controller
 {
@@ -74,7 +75,16 @@ class MovieController extends Controller
             'query' => 'required|string|max:1024',
         ]);
         $query = $request->get('query');
-        $recommendations = $this->recommendationService->getRecommendations($query);
+        try {
+            $recommendations = $this->recommendationService->getRecommendations($query);
+        } catch (HttpException $e) {
+            if($e->getStatusCode() == 503) {
+                return response()->json("Gemini Error", 503);
+            } else {
+                return response()->json("Server Error", 500);
+            }
+    }
+
         if (count($recommendations) == 1 && $recommendations[0] == "Unknown") {
             return response()->json([]);
         }

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services;
 
+use App\Services\ApiUsageTrackerService;
 use Tests\TestCase;
 use App\Services\MovieService;
 use App\Services\TrailerService;
@@ -15,12 +16,14 @@ class MovieServiceTest extends TestCase
 {
     private $trailerService;
     private $movieService;
+    private $apiService;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->trailerService = Mockery::mock(TrailerService::class);
-        $this->movieService = new MovieService($this->trailerService);
+        $this->apiService = Mockery::mock(ApiUsageTrackerService::class);
+        $this->movieService = new MovieService($this->trailerService, $this->apiService);
     }
 
     public function testFetchMovieWithSqlInjectionAttempt()

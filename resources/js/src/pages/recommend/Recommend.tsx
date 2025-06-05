@@ -21,7 +21,7 @@ export default function Recommend() {
 
 
 
-    const { data, isLoading, isError, isFetching } = useQuery({
+    const { data, isLoading, isError, error, isFetching } = useQuery({
         queryKey: ["movies", query],
         queryFn: () => (query ? fetchImdbIds(query) : Promise.resolve(null)),
         enabled: !!query,
@@ -64,7 +64,7 @@ export default function Recommend() {
     }
 
     if (isError || !data) {
-        return <Error/>
+        return <Error code={error!!.message}/>
     }
 
 

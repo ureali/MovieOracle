@@ -56,7 +56,6 @@
         <h2>Gemini API</h2>
         <div class="usage-stat">
             <p><strong>Today's Calls:</strong> {{ $geminiTodaysCount }}</p>
-            <p><em>Note: Daily limit for Gemini API not specified here.</em></p>
         </div>
     </div>
 
@@ -64,7 +63,6 @@
         <h2>YouTube API</h2>
         <div class="usage-stat">
             <p><strong>Today's Calls:</strong> {{ $youtubeTodaysCount }}</p>
-            <p><em>Note: Daily limit for YouTube API not specified here.</em></p>
         </div>
     </div>
 
