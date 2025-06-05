@@ -29,14 +29,14 @@ export default function MoviePage() {
                 className="w-full flex flex-col-reverse justify-center items-center pt-8 pb-8 relative movie-night-sky ">
                 {/* Yes it's a fake link. Tanstack doesnt have navigate back smh. */}
                 <a href="#" onClick={() => history.go(-1)}
-                   className=" absolute top-14 left-14 z-20 text-movie-yellow font-bold ring-2 ring-movie-yellow p-4 rounded-2xl text-3xl drop-shadow-[0_0_4px_rgba(255,255,0,0.8)] font-bangers tracking-widest hover:drop-shadow-[0_0_8px_rgba(255,255,0,1)] transition-all max-lg:static max-md:my-24">⇦
+                   className=" absolute top-14 left-14 z-20 text-movie-yellow font-bold ring-2 ring-movie-yellow p-4 rounded-2xl text-3xl drop-shadow-[0_0_4px_rgba(255,255,0,0.8)] font-bangers tracking-widest hover:drop-shadow-[0_0_8px_rgba(255,255,0,1)] transition-all max-lg:static max-md:mb-12">⇦
                     Back</a>
                 <img src={nightSky} alt="Night Sky" loading="lazy"
                      className="block absolute top-0 left-0 w-full h-full -z-[1]"/>
                 <Marquee title={movie.title}/>
             </header>
 
-            <section className="mx-auto max-w-screen-xl max-lg:max-w-4/5 my-3 px-4
+            <section className="mx-auto max-w-screen-xl max-lg:max-w-11/12 my-3 px-4
                     grid gap-10 lg:grid-cols-3">
                 <div>
                     <MoviePoster movie={movie}/>
@@ -92,7 +92,7 @@ export default function MoviePage() {
                 </div>
             </section>
             <section className="rounded-xl border-b-4 border-b-movie-yellow
-                        shadow-xl hover:-translate-y-1 transition max-w-screen-xl max-lg:max-w-4/5 mx-auto mt-16
+                        shadow-xl hover:-translate-y-1 transition max-w-screen-xl max-lg:max-w-11/12 mx-auto mt-16
                         bg-white/5 backdrop-blur">
                 <h2 className="text-3xl font-bangers text-primary text-center py-4">Where to Watch</h2>
                 <div className="px-6 pb-6 text-lg leading-relaxed"><OracleLink
