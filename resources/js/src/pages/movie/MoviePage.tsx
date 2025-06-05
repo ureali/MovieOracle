@@ -26,7 +26,7 @@ export default function MoviePage() {
                 content={`${movie.title}, movie details, watch ${movie.title}, ${movie.title} trailer`}
             />
             <header
-                className="w-full flex flex-col-reverse justify-center items-center pt-8 pb-8 relative movie-night-sky ">
+                className="w-full flex flex-col-reverse justify-center items-center p-8 relative movie-night-sky ">
                 {/* Yes it's a fake link. Tanstack doesnt have navigate back smh. */}
                 <a href="#" onClick={() => history.go(-1)}
                    className=" absolute top-14 left-14 z-20 text-movie-yellow font-bold ring-2 ring-movie-yellow p-4 rounded-2xl text-3xl drop-shadow-[0_0_4px_rgba(255,255,0,0.8)] font-bangers tracking-widest hover:drop-shadow-[0_0_8px_rgba(255,255,0,1)] transition-all max-lg:static max-md:mb-12">⇦
