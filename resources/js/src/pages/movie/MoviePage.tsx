@@ -101,7 +101,9 @@ export default function MoviePage() {
                     target="_blank"/></div>
             </section>
 
-            <section className="w-full mx-auto py-16 text-center space-y-6">
+            {/* youtube data is genuinely crazy, burning through faster than GEMINI!!!*/}
+            { movie.youtube_trailer_url ?
+                (<section className="w-full mx-auto py-16 text-center space-y-6">
                 <h2 className="text-4xl font-bangers text-primary">Trailer</h2>
                 <div className="movie-theater-section max-w-screen-xl rounded-md py-6 mx-auto max-xl:w-full">
                     <div className="  mx-auto w-2/3 aspect-video
@@ -116,7 +118,8 @@ export default function MoviePage() {
                     </div>
                 </div>
 
-            </section>
+            </section> ) : ""
+            }
         </main>
 
     )

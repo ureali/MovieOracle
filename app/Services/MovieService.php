@@ -41,7 +41,7 @@ class MovieService
         try {
             $query = trim(preg_replace('/\s+/', ' ', $query));
 
-            return Movie::where('title', 'ILIKE', "%$query%")->firstOr(function () use ($param, $query) {
+            $movie = Movie::where('title', 'ILIKE', "%$query%")->firstOr(function () use ($param, $query) {
                 $api_key = config('services.omdb.key');
                 $response = Http::get('https://www.omdbapi.com/', [
                     "$param"      => $query,
@@ -69,6 +69,18 @@ class MovieService
 
                 ]);
             });
+
+            // could be bad practice, but for this use case should be fine
+            // just fetching the trailer if it's not there (delay should be miniscule)
+            if (empty($movie->youtube_trailer_url)) {
+                $newUrl = $this->trailerService->searchTrailers($movie->title);
+                if ($newUrl) {
+                    $movie->update(['youtube_trailer_url' => $newUrl]);
+                    $movie->refresh();
+                }
+            }
+
+            return $movie;
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return null;

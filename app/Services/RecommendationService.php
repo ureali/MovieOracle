@@ -39,7 +39,7 @@ Today's year is $date
 •  **NO CODE FENCES (```json), NO MARKDOWN, AND NO EXTRA WHITESPACE.**
 •  The output MUST be a JSON array of objects.
 •  Each object in the array MUST have a single key "title" with a string value.
-•  Provide up to 5 relevant movie titles. If fewer than 5 are relevant, provide only the relevant ones.
+•  Provide UP TO 5 relevant movie titles. If fewer than 5 are relevant, provide only the relevant ones. DO NOT PROVIDE MORE THAN 5
 
 **Handling Edge Cases and Contradictory User Requests:**
 •  If you cannot find any suitable movies, or if the user's description is not meaningful (e.g., gibberish, an empty string, or just a greeting), you MUST output the following JSON:
